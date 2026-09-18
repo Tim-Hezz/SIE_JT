@@ -1,5 +1,6 @@
 ---
 name: sap-remote-rfc
+version: 1.0.0
 description: 通过直连 HTTP 的 SOAP RFC 远程调用 SAP 标准函数模块（TFDIR-FMODE='R'），全程不进 SAP GUI。典型用途：远程维护报表程序的文本元素/TEXTPOOL（SIW_RFC_WRITE_TEXTPOOL、SIW_RFC_READ_TEXTPOOL）、生成 GUI 界面（RS_CUA_GENERATE_ALL）、跑自建 RFC 壳并取回结果（ZRUN_PROG / ZRUN_SEED_RUN / ZRUN_TEST_RUN）、对象激活后复核源码。触发词：远程调用 RFC、不进 SAP GUI、维护文本元素、TEXTPOOL、选择文本、SOAP RFC、RunReport 失败、远程执行报表程序、取回 ALV/清单结果、cl_salv_bs_runtime_info、LIST_TO_ASCI、远程查 ST22 dump、批量激活假成功、INCL 语法检查、shell 残缺替代。
 agent_created: true
 ---
@@ -295,7 +296,7 @@ console.log(s);'
 ```
 
 ⛔ **`curl -o /tmp/x.xml` 后 node 读 `%TEMP%/x.xml` 会 `ENOENT`** ——
-Git Bash 的 `/tmp` 不映射到 Windows `%TEMP%`。**一律写明确的 Windows 路径（如 `C:/temp/`）。**
+Git Bash 的 `/tmp` 不映射到 Windows `%TEMP%`。**一律写 `C:/Users/Tim/` 明确路径。**
 
 ### 多系统凭据选择（mcp.json 里配了多个 SAP 时必看）
 
