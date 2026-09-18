@@ -9,16 +9,18 @@ SAP 实施交付类 skill 集合（DSH / Claude Code 兼容的目录式 skill）
 
 ## 包含的 skill
 
+每个 skill 一个顶层目录，目录内自带 `SKILL.md`（DSH 按此识别）。
+
 | skill | 作用 |
 |---|---|
-| [`fs-quick-design`](fs-quick-design/) | SAP 需求「快速技术方案」生成器（多轮确认制）。第一轮只出**业务框架图 + 技术框架图 + 界面图 + 要点/待确认**，先对齐业务理解，再谈细节 |
-| [`sap-remote-rfc`](sap-remote-rfc/) | 通过直连 HTTP 的 **SOAP RFC** 远程调用 SAP 标准函数模块（`TFDIR-FMODE='R'`），**全程不进 SAP GUI**。文本元素/TEXTPOOL 维护、GUI 状态复制与激活、远程跑报表取结果、远程查 ST22 dump |
+| [`fs-quick-design/`](fs-quick-design/) | SAP 需求「快速技术方案」生成器（多轮确认制）。第一轮只出**业务框架图 + 技术框架图 + 界面图 + 要点/待确认**，先对齐业务理解，再谈细节 |
+| [`sap-remote-rfc/`](sap-remote-rfc/) | 通过直连 HTTP 的 **SOAP RFC** 远程调用 SAP 标准函数模块（`TFDIR-FMODE='R'`），**全程不进 SAP GUI**。文本元素/TEXTPOOL 维护、GUI 状态复制与激活、远程跑报表取结果、远程查 ST22 dump |
 
 ---
 
 ## 安装
 
-把 skill 目录拷到你的 skill 根目录即可，**DSH 会自动发现、不用重启**：
+把**整个 skill 目录**拷到你的 skill 根目录即可，**DSH 会自动发现、不用重启**：
 
 | 作用域 | 路径 |
 |---|---|
@@ -27,7 +29,8 @@ SAP 实施交付类 skill 集合（DSH / Claude Code 兼容的目录式 skill）
 
 ```bash
 git clone https://github.com/Tim-Hezz/SIE_JT.git
-cp -r SIE_JT/fs-quick-design "<DSH_HOME>/skills/"
+cp -r SIE_JT/fs-quick-design       "<DSH_HOME>/skills/"
+cp -r SIE_JT/sap-remote-rfc        "<DSH_HOME>/skills/"
 ```
 
 > ⚠️ **别把备份目录放进 skills 根目录**。DSH 会扫描该目录下**每个含 `SKILL.md` 的子目录**并**按 skill 名去重**；
@@ -76,8 +79,9 @@ cp -r SIE_JT/fs-quick-design "<DSH_HOME>/skills/"
 
 ## 仓库约定
 
-- 各 skill **自包含**：`references/` 与 `examples/` 用相对路径引用，拷走即用。
-- 脚本以 skill 根目录为基准定位资源（文档中写作 `<skill>/scripts/...`）。
+- **一个 skill 一个顶层目录**，目录名 = skill 名；内容自包含，
+  `references/` 与 `examples/` 用相对路径引用，拷走即用。
+- 脚本以**所在 skill 根目录**为基准定位资源（文档中写作 `<skill>/scripts/...`）。
 - 版本号唯一来源：各 skill `SKILL.md` frontmatter 的 `version:`。
 - **提交前请自查脱敏**，见文首警示。
 
