@@ -6,10 +6,11 @@ __pycache__/
 venv/
 
 # 工作产物（skill 运行时生成，不入库）
-figs.json
-30-FS-*.md
-out/
-*.svg.tmp
+# ⚠️ 只忽略仓库根目录下的产出，不要用 `30-FS-*.md` 通配 ——
+#    那会把 skill 自带的模板 references/03-产出模板/30-FS-模板.md 一起排除掉（已踩过）
+/30-FS-*.md
+/figs.json
+/out/
 
 # 编辑器 / 系统
 .vscode/
