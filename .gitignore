@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 工作产物（skill 运行时生成，不入库）
+figs.json
+30-FS-*.md
+out/
+*.svg.tmp
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 备份（skills 根目录下曾因同名 SKILL.md 遮蔽正本）
+*backup*/
+*.bak
+*.sha256
+
+# 敏感信息（绝不入库）
+.credentials.yaml
+*.credentials.*
+.env
+.env.*
+mcp.json
