@@ -15,6 +15,7 @@ SAP 实施交付类 skill 集合（DSH / Claude Code 兼容的目录式 skill）
 |---|---|
 | [`fs-quick-design/`](fs-quick-design/) | SAP 需求「快速技术方案」生成器（多轮确认制）。第一轮只出**业务框架图 + 技术框架图 + 界面图 + 要点/待确认**，先对齐业务理解，再谈细节 |
 | [`sap-remote-rfc/`](sap-remote-rfc/) | 通过直连 HTTP 的 **SOAP RFC** 远程调用 SAP 标准函数模块（`TFDIR-FMODE='R'`），**全程不进 SAP GUI**。文本元素/TEXTPOOL 维护、GUI 状态复制与激活、远程跑报表取结果、远程查 ST22 dump |
+| [`mcp-connector-refactor/`](mcp-connector-refactor/) | **DSH** 自有 MCP 连接器安装与多系统连接改造方法论。注册 MCP server、实现「单连接器 + 按需调用」多系统架构、建立连接注册表与管理 CLI、修复启动链（Windows 编码 / spawn / 沙箱管道 EPERM） |
 
 ---
 
@@ -63,9 +64,22 @@ cp -r SIE_JT/sap-remote-rfc        "<DSH_HOME>/skills/"
   `cygpath` 仅 Git Bash 下做路径转换
 - **`mcp__sap-vsp__SAP`**（删对象 / 激活程序）是**另一个 MCP**，没装则相关步骤走 GUI 替代
 
+### mcp-connector-refactor
+
+- **DSH**（DeepSeek Harness）环境；讲的是 DSH 自有设施
+- **Node ≥ 22.19**（arc-1 的要求；其他 server 按各自 README）
+  - Windows 下用 `npm.cmd` —— `.ps1` 常被 PowerShell 执行策略禁用
+- **`dsh-skill-mcp-panel` 插件**（通常随 profile 预装）—— 它提供的 CLI 是注册 MCP 的正规入口
+- ⚠️ **注册 MCP 需要工作区外写权限**：它会写 `<DSH_HOME>/profiles/<profile>/cordis.patch.yml`，
+  沙箱为 workspace-write 时会被拒（EPERM）
+- 无 npm 包的 server 无需安装（托管 HTTP 型直接注册 URL）；具体 SAP 侧对象读写见 `sap-arc1-write`
+
+> 📌 该 skill 讲的是「怎么装 / 怎么改连接器」，**不包含 SAP 业务侧的对象操作细节**——
+> 那部分归 `sap-arc1-write`，两份不重复。
+
 ---
 
-## 安全红线（两个 skill 共同遵守）
+## 安全红线（各 skill 共同遵守）
 
 1. **绝不直接 `INSERT` / `UPDATE` / `MODIFY` / `DELETE` 任何标准表**（`TADIR` / `EUDB` /
    `RSMPTEXTS` / `E070` …）。只能调标准函数 / BAPI，让 SAP 自己写它自己的表。
